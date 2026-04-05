@@ -49,7 +49,7 @@ const Comment = ({
 
     setReplying(true);
     try {
-      const reply = await apiService.createReply(comment.id, replyContent);
+      const {reply} = await apiService.createReply(comment.id, replyContent);
       setReplyContent("");
       setShowReplyInput(false);
       setShowReplies(true);

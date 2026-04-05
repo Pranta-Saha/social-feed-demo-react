@@ -20,7 +20,7 @@ const CommentSection = ({
     setLoading(true);
     try {
       const newComment = await apiService.createComment(postId, commentContent);
-      setComments([newComment, ...comments]);
+      setComments([newComment.comment, ...comments]);
       setCommentContent("");
       if (onCommentAdded) onCommentAdded(newComment);
     } catch (error) {
