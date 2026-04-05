@@ -12,7 +12,7 @@ const FeedHeader = () => {
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light _header_nav _padd_t10">
-      <div className="container _custom_container">
+      <div className="container _custom_container" style={{ height: '70px'}}>
         <div className="_logo_wrap">
           <a className="navbar-brand" href="/feed">
             <img src="/assets/images/logo.svg" alt="Logo" className="_nav_logo" />

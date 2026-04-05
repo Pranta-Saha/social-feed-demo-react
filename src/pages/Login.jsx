@@ -142,23 +142,6 @@ const Login = () => {
                     </div>
                   </div>
                 </div>
-
-                <div style={{ textAlign: 'center', marginTop: '20px', fontSize: '12px', color: '#999' }}>
-                  <p>Demo: Click below to fill demo credentials</p>
-                  <button
-                    type="button"
-                    onClick={fillDemoCredentials}
-                    style={{
-                      background: 'none',
-                      border: 'none',
-                      color: '#1890FF',
-                      cursor: 'pointer',
-                      textDecoration: 'underline',
-                    }}
-                  >
-                    Fill Demo Credentials
-                  </button>
-                </div>
               </div>
             </div>
           </div>

@@ -123,49 +123,49 @@ export const apiService = {
   },
 
   deleteComment: async (commentId) => {
-    return apiCall(`/comments/${commentId}`, { method: 'DELETE' });
+    return apiCall(`/posts/comments/${commentId}`, { method: 'DELETE' });
   },
 
   // ==================== COMMENT LIKES ====================
   likeComment: async (commentId) => {
-    return apiCall(`/comments/${commentId}/like`, { method: 'POST' });
+    return apiCall(`/posts/comments/${commentId}/like`, { method: 'POST' });
   },
 
   unlikeComment: async (commentId) => {
-    return apiCall(`/comments/${commentId}/unlike`, { method: 'POST' });
+    return apiCall(`/posts/comments/${commentId}/unlike`, { method: 'POST' });
   },
 
   getCommentLikes: async (commentId) => {
-    return apiCall(`/comments/${commentId}/likes`);
+    return apiCall(`/posts/comments/${commentId}/likes`);
   },
 
   // ==================== REPLIES ====================
   getReplies: async (commentId) => {
-    return apiCall(`/comments/${commentId}/replies`);
+    return apiCall(`/posts/comments/${commentId}/replies`);
   },
 
   createReply: async (commentId, content) => {
-    return apiCall(`/comments/${commentId}/replies`, {
+    return apiCall(`/posts/comments/${commentId}/replies`, {
       method: 'POST',
       body: JSON.stringify({ content }),
     });
   },
 
   deleteReply: async (replyId) => {
-    return apiCall(`/replies/${replyId}`, { method: 'DELETE' });
+    return apiCall(`/posts/replies/${replyId}`, { method: 'DELETE' });
   },
 
   // ==================== REPLY LIKES ====================
   likeReply: async (replyId) => {
-    return apiCall(`/replies/${replyId}/like`, { method: 'POST' });
+    return apiCall(`/posts/replies/${replyId}/like`, { method: 'POST' });
   },
 
   unlikeReply: async (replyId) => {
-    return apiCall(`/replies/${replyId}/unlike`, { method: 'POST' });
+    return apiCall(`/posts/replies/${replyId}/unlike`, { method: 'POST' });
   },
 
   getReplyLikes: async (replyId) => {
-    return apiCall(`/replies/${replyId}/likes`);
+    return apiCall(`/posts/replies/${replyId}/likes`);
   },
 };
 

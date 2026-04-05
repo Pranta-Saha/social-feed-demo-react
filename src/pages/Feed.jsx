@@ -40,8 +40,8 @@ const Feed = () => {
     }
   };
 
-  const handlePostCreated = (newPost) => {
-    setPosts([newPost, ...posts]);
+  const handlePostCreated = () => {
+    loadPosts();
   };
 
   const handlePostUpdated = (updatedPost) => {

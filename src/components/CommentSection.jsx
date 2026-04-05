@@ -44,7 +44,7 @@ const CommentSection = ({ postId, comments: initialComments, currentUserId, onCo
     );
   };
 
-  const displayComments = showPreviousComments ? comments : comments.slice(0, 3);
+  const displayComments = showPreviousComments ? comments : comments.slice(0, 1);
 
   return (
     <div className="_feed_inner_timeline_cooment_area">
@@ -55,7 +55,6 @@ const CommentSection = ({ postId, comments: initialComments, currentUserId, onCo
               <img
                 src="/assets/images/default-image.png"
                 alt="Your profile"
-                className="_comment_img"
                 style={{ width: '40px', height: '40px', borderRadius: '50%', objectFit: 'cover' }}
               />
             </div>
@@ -89,7 +88,7 @@ const CommentSection = ({ postId, comments: initialComments, currentUserId, onCo
       </div>
 
       <div className="_timline_comment_main">
-        {comments.length > 3 && !showPreviousComments && (
+        {comments.length > 1 && !showPreviousComments && (
           <div className="_previous_comment">
             <button
               type="button"
@@ -106,13 +105,13 @@ const CommentSection = ({ postId, comments: initialComments, currentUserId, onCo
                 marginBottom: '12px',
               }}
             >
-              View previous comments ({comments.length - 3} more)
+              View previous comments ({comments.length - 1} more)
             </button>
           </div>
         )}
 
         {displayComments.length > 0 && (
-          <div className="_comment_main" style={{ padding: '12px 0' }}>
+          <div style={{ padding: '12px 0' }}>
             {displayComments.map((comment) => (
               <Comment
                 key={comment.id}
@@ -128,7 +127,7 @@ const CommentSection = ({ postId, comments: initialComments, currentUserId, onCo
 
         {comments.length === 0 && (
           <div style={{ textAlign: 'center', padding: '20px', color: '#999', fontSize: '14px' }}>
-            No comments yet. Be the first to comment!
+            No comments yet.
           </div>
         )}
       </div>

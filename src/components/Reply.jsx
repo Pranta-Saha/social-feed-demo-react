@@ -2,11 +2,11 @@ import { useState } from 'react';
 import apiService from '../services/apiService';
 
 const Reply = ({ reply, postId, commentId, onReplyLiked, currentUserId }) => {
+  console.log('Rendering Reply:', reply);
   const [showLikedUsers, setShowLikedUsers] = useState(false);
   const [liking, setLiking] = useState(false);
   const [liked, setLiked] = useState(reply.likedByCurrentUser || false);
-  const [likeCount, setLikeCount] = useState(reply.likesCount || 0);
-  const [likedUsers, setLikedUsers] = useState([]);
+  const [likes, setLikes] = useState(reply.likes || []);
 
   const handleLike = async () => {
     setLiking(true);
@@ -14,14 +14,16 @@ const Reply = ({ reply, postId, commentId, onReplyLiked, currentUserId }) => {
       if (liked) {
         await apiService.unlikeReply(reply.id);
         setLiked(false);
-        setLikeCount(Math.max(0, likeCount - 1));
+        setLikes(likes.filter(l => l.userId !== currentUserId));
       } else {
         await apiService.likeReply(reply.id);
         setLiked(true);
-        setLikeCount(likeCount + 1);
+        const newLike = { userId: currentUserId, user: { firstName: 'You', lastName: '' } };
+        setLikes([...likes, newLike]);
       }
     } catch (error) {
       console.error('Failed to toggle like:', error);
+      alert('Failed to like reply');
     } finally {
       setLiking(false);
     }
@@ -32,29 +34,22 @@ const Reply = ({ reply, postId, commentId, onReplyLiked, currentUserId }) => {
 
   return (
     <div style={{ marginLeft: '32px', marginBottom: '12px', paddingLeft: '12px', borderLeft: '2px solid #E8E8E8' }}>
-      <div className="_comment_image" style={{ display: 'flex', gap: '8px' }}>
+      <div style={{ display: 'flex', gap: '8px' }}>
         <div>
           <img
             src="/assets/images/default-image.png"
             alt={reply.author?.firstName || 'User'}
-            className="_comment_img1"
             style={{ width: '32px', height: '32px', borderRadius: '50%', objectFit: 'cover' }}
           />
         </div>
         <div style={{ flex: 1 }}>
-          <div className="_comment_details">
-            <div className="_comment_details_top">
-              <div className="_comment_name">
-                <h4 className="_comment_name_title" style={{ marginBottom: '4px' }}>
+          <div>
+            <div>
+              <h4 className="_comment_name_title" style={{ marginBottom: '4px' }}>
                   {reply.author?.firstName} {reply.author?.lastName}
                 </h4>
-              </div>
             </div>
-            <div className="_comment_status">
-              <p className="_comment_status_text">
-                <span>{reply.content}</span>
-              </p>
-            </div>
+            <div style={{ fontSize: '14px', color: '#333' }}>{reply.content}</div>
             <div style={{ display: 'flex', gap: '12px', fontSize: '12px', marginTop: '8px', alignItems: 'center' }}>
               <button
                 onClick={handleLike}
@@ -72,13 +67,7 @@ const Reply = ({ reply, postId, commentId, onReplyLiked, currentUserId }) => {
               <span style={{ color: '#999' }}>{timeAgo}</span>
               <div style={{ position: 'relative', display: 'inline-block' }}>
                 <button
-                  onMouseEnter={() => {
-                    if (likeCount > 0 && likedUsers.length === 0) {
-                      setShowLikedUsers(true);
-                    } else {
-                      setShowLikedUsers(true);
-                    }
-                  }}
+                  onMouseEnter={() => setShowLikedUsers(true)}
                   onMouseLeave={() => setShowLikedUsers(false)}
                   style={{
                     background: 'none',
@@ -89,9 +78,9 @@ const Reply = ({ reply, postId, commentId, onReplyLiked, currentUserId }) => {
                     padding: '0',
                   }}
                 >
-                  {likeCount} Likes
+                  {likes.length} Likes
                 </button>
-                {showLikedUsers && likedUsers.length > 0 && (
+                {showLikedUsers && likes.length > 0 && (
                   <div
                     style={{
                       position: 'absolute',
@@ -106,9 +95,9 @@ const Reply = ({ reply, postId, commentId, onReplyLiked, currentUserId }) => {
                       boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
                     }}
                   >
-                    {likedUsers.map((user, idx) => (
+                    {likes.map((like, idx) => (
                       <div key={idx} style={{ fontSize: '12px', padding: '4px 0' }}>
-                        {typeof user === 'string' ? user : user.name || user.id}
+                        {like.user?.firstName} {like.user?.lastName}
                       </div>
                     ))}
                   </div>

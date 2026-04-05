@@ -10,8 +10,7 @@ const Comment = ({ comment, postId, onCommentLiked, onReplyAdded, currentUserId 
   const [replying, setReplying] = useState(false);
   const [showLikedUsers, setShowLikedUsers] = useState(false);
   const [liked, setLiked] = useState(comment.likedByCurrentUser || false);
-  const [likeCount, setLikeCount] = useState(comment.likesCount || 0);
-  const [likedUsers, setLikedUsers] = useState([]);
+  const [likes, setLikes] = useState(comment.likes || []);
   const [replies, setReplies] = useState(comment.replies || []);
 
   const handleLikeComment = async () => {
@@ -20,14 +19,16 @@ const Comment = ({ comment, postId, onCommentLiked, onReplyAdded, currentUserId 
       if (liked) {
         await apiService.unlikeComment(comment.id);
         setLiked(false);
-        setLikeCount(Math.max(0, likeCount - 1));
+        setLikes(likes.filter(l => l.userId !== currentUserId));
       } else {
         await apiService.likeComment(comment.id);
         setLiked(true);
-        setLikeCount(likeCount + 1);
+        const newLike = { userId: currentUserId, user: { firstName: 'You', lastName: '' } };
+        setLikes([...likes, newLike]);
       }
     } catch (error) {
       console.error('Failed to toggle like:', error);
+      alert('Failed to like comment');
     } finally {
       setLiking(false);
     }
@@ -57,18 +58,17 @@ const Comment = ({ comment, postId, onCommentLiked, onReplyAdded, currentUserId 
   const timeAgo = getTimeAgo(comment.createdAt);
 
   return (
-    <div className="_comment_main" style={{ marginBottom: '16px', paddingBottom: '16px', borderBottom: '1px solid #F0F2F5' }}>
-      <div className="_comment_image">
+    <div style={{ marginBottom: '16px', paddingBottom: '16px', borderBottom: '1px solid #F0F2F5' }}>
+      <div>
         <div style={{ display: 'flex', gap: '8px' }}>
           <img
             src="/assets/images/default-image.png"
             alt={comment.author?.firstName || 'User'}
-            className="_comment_img1"
             style={{ width: '32px', height: '32px', borderRadius: '50%', objectFit: 'cover' }}
           />
           <div style={{ flex: 1 }}>
             <div className="_comment_area">
-              <div className="_comment_details">
+              <div className="_comment_details" style={{minWidth: '380px'}}>
                 <div className="_comment_details_top">
                   <div className="_comment_name">
                     <a href="#0">
@@ -86,14 +86,7 @@ const Comment = ({ comment, postId, onCommentLiked, onReplyAdded, currentUserId 
                 <div className="_total_reactions" style={{ display: 'flex', gap: '8px', alignItems: 'center', marginTop: '8px' }}>
                   <div style={{ position: 'relative', display: 'inline-block' }}>
                     <button
-                      onMouseEnter={() => {
-                        if (likeCount > 0 && likedUsers.length === 0) {
-                          // Load liked users when hovering
-                          setShowLikedUsers(true);
-                        } else {
-                          setShowLikedUsers(true);
-                        }
-                      }}
+                      onMouseEnter={() => setShowLikedUsers(true)}
                       onMouseLeave={() => setShowLikedUsers(false)}
                       style={{
                         background: 'none',
@@ -110,9 +103,9 @@ const Comment = ({ comment, postId, onCommentLiked, onReplyAdded, currentUserId 
                       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                         <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3" />
                       </svg>
-                      {likeCount}
+                      {likes.length}
                     </button>
-                    {showLikedUsers && likedUsers.length > 0 && (
+                    {showLikedUsers && likes.length > 0 && (
                       <div
                         style={{
                           position: 'absolute',
@@ -127,9 +120,9 @@ const Comment = ({ comment, postId, onCommentLiked, onReplyAdded, currentUserId 
                           boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
                         }}
                       >
-                        {likedUsers.map((user, idx) => (
+                        {likes.map((like, idx) => (
                           <div key={idx} style={{ fontSize: '12px', padding: '4px 0' }}>
-                            {typeof user === 'string' ? user : user.name || user.id}
+                            {like.user?.firstName} {like.user?.lastName}
                           </div>
                         ))}
                       </div>
@@ -205,7 +198,6 @@ const Comment = ({ comment, postId, onCommentLiked, onReplyAdded, currentUserId 
                       <img
                         src="/assets/images/default-image.png"
                         alt="You"
-                        className="_comment_img"
                         style={{ width: '32px', height: '32px', borderRadius: '50%', objectFit: 'cover' }}
                       />
                     </div>
