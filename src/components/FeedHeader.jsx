@@ -12,28 +12,19 @@ const FeedHeader = () => {
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light _header_nav _padd_t10">
-      <div className="container _custom_container" style={{ height: '70px'}}>
+      <div className="container _custom_container _feed_header_container">
         <div className="_logo_wrap">
           <a className="navbar-brand" href="/feed">
             <img src="/assets/images/logo.svg" alt="Logo" className="_nav_logo" />
           </a>
         </div>
-        <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '20px' }}>
-          <span style={{ fontSize: '14px', color: 'var(--color)' }}>
+        <div className="_feed_header_right">
+          <span className="_welcome_text">
             Welcome, {user?.firstName}!
           </span>
           <button
             onClick={handleLogout}
-            style={{
-              background: 'var(--color5)',
-              color: 'white',
-              border: 'none',
-              padding: '8px 16px',
-              borderRadius: '6px',
-              cursor: 'pointer',
-              fontSize: '14px',
-              fontWeight: '500',
-            }}
+            className="_logout_button"
           >
             Logout
           </button>

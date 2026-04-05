@@ -54,12 +54,11 @@ const CreatePost = ({ onPostCreated }) => {
         </div>
         <div className="form-floating _feed_inner_text_area_box_form">
           <textarea
-            className="form-control _textarea"
+            className="form-control _textarea _textarea_input"
             placeholder="Write something ..."
             id="createPostTextarea"
             value={content}
             onChange={(e) => setContent(e.target.value)}
-            style={{ minHeight: '80px' }}
           />
           <label className="_feed_textarea_label" htmlFor="createPostTextarea">
             Write something ...
@@ -74,11 +73,11 @@ const CreatePost = ({ onPostCreated }) => {
       </div>
 
       {imagePreview && (
-        <div style={{ marginTop: '12px', position: 'relative' }}>
+        <div className="_image_preview_wrapper">
           <img
             src={imagePreview}
             alt="Preview"
-            style={{ maxHeight: '200px', borderRadius: '6px', width: '100%', objectFit: 'cover' }}
+            className="_image_preview"
           />
           <button
             type="button"
@@ -86,35 +85,20 @@ const CreatePost = ({ onPostCreated }) => {
               setImage(null);
               setImagePreview(null);
             }}
-            style={{
-              position: 'absolute',
-              top: '8px',
-              right: '8px',
-              background: 'rgba(0,0,0,0.7)',
-              color: 'white',
-              border: 'none',
-              borderRadius: '50%',
-              width: '32px',
-              height: '32px',
-              cursor: 'pointer',
-              fontSize: '18px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
+            className="_image_remove_button"
           >
             ×
           </button>
         </div>
       )}
 
-      <div style={{ marginTop: '12px', display: 'flex', alignItems: 'center', gap: '12px', fontSize: '14px' }}>
-        <label style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer' }}>
+      <div className="_privacy_section">
+        <label className="_privacy_checkbox_label">
           <input
             type="checkbox"
             checked={isPrivate}
             onChange={(e) => setIsPrivate(e.target.checked)}
-            style={{ cursor: 'pointer' }}
+            className="_privacy_checkbox"
           />
           <span>Private</span>
         </label>
@@ -143,7 +127,7 @@ const CreatePost = ({ onPostCreated }) => {
               type="file"
               accept="image/*"
               onChange={handleImageChange}
-              style={{ display: 'none' }}
+              className="_file_input_hidden"
             />
           </div>
         </div>

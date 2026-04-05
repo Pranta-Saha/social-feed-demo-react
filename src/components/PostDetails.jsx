@@ -202,7 +202,7 @@ const PostDetails = ({ post, currentUserId, onPostDeleted }) => {
     <div className="_feed_inner_timeline_post_area _b_radious6 _padd_b24 _padd_t24 _mar_b16">
       <div className="_feed_inner_timeline_content _padd_r24 _padd_l24">
         {/* Post Header */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
+        <div className="_post_header">
           <div className="_feed_inner_timeline_post_top">
             <div className="_feed_inner_timeline_post_box">
               <div className="_feed_inner_timeline_post_box_image">
@@ -214,7 +214,7 @@ const PostDetails = ({ post, currentUserId, onPostDeleted }) => {
                 </h4>
                 <p className="_feed_inner_timeline_post_box_para">
                   {timeAgo} ·{' '}
-                  <a href="#0" style={{ color: '#1890FF', textDecoration: 'none' }}>
+                  <a href="#0" className="_post_visibility_link">
                     {post.isPrivate ? 'Private' : 'Public'}
                   </a>
                 </p>
@@ -227,16 +227,7 @@ const PostDetails = ({ post, currentUserId, onPostDeleted }) => {
             <button
               onClick={handleDelete}
               disabled={deleting}
-              style={{
-                background: '#ff4444',
-                color: 'white',
-                border: 'none',
-                padding: '6px 12px',
-                borderRadius: '4px',
-                cursor: 'pointer',
-                fontSize: '12px',
-                fontWeight: '500',
-              }}
+              className="_post_delete_button"
             >
               {deleting ? 'Deleting...' : 'Delete'}
             </button>
@@ -264,35 +255,18 @@ const PostDetails = ({ post, currentUserId, onPostDeleted }) => {
       <div className="_feed_inner_timeline_total_reacts _padd_r24 _padd_l24 _mar_b26">
         <div className="_feed_inner_timeline_total_reacts_txt">
           <p className="_feed_inner_timeline_total_reacts_para1">
-            <div style={{ position: 'relative' }}>
+            <div className="_post_likes_container">
               <button
                 onMouseEnter={() => setShowLikedUsers(true)}
                 onMouseLeave={() => setShowLikedUsers(false)}
-                style={{
-                  background: 'none',
-                  border: 'none',
-                  cursor: 'pointer',
-                }}
+                className="_post_likes_button"
               >
                 <span>{likes.length}</span> Like
               </button>
               {showLikedUsers && likes.length > 0 && (
-                <div
-                  style={{
-                    position: 'absolute',
-                    top: '24px',
-                    left: '0',
-                    background: 'white',
-                    border: '1px solid #DDD',
-                    borderRadius: '4px',
-                    padding: '8px',
-                    minWidth: '150px',
-                    zIndex: 10,
-                    boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-                  }}
-                >
+                <div className="_post_likes_dropdown">
                   {likes.map((like, idx) => (
-                    <div key={idx} style={{ fontSize: '12px', padding: '4px 0', color: '#333' }}>
+                    <div key={idx} className="_post_like_item">
                       {like.user?.firstName} {like.user?.lastName}
                     </div>
                   ))}
@@ -309,17 +283,12 @@ const PostDetails = ({ post, currentUserId, onPostDeleted }) => {
       {/* Like and Comment Buttons */}
       <div className="_feed_inner_timeline_reaction">
         <button
-          className={`_feed_inner_timeline_reaction_emoji _feed_reaction ${liked ? '_feed_reaction_active' : ''}`}
+          className={`_feed_inner_timeline_reaction_emoji _feed_reaction _post_like_button ${liked ? 'liked' : ''}`}
           onClick={handleLike}
           disabled={liking}
-          style={{
-            background: liked ? 'rgba(24, 144, 255, 0.1)' : 'transparent',
-            color: liked ? '#1890FF' : '#666',
-            fontWeight: liked ? '600' : '400',
-          }}
         >
           <span className="_feed_inner_timeline_reaction_link">
-            <span className="_reaction_like" style={{marginRight: '6px'}}>
+            <span className="_reaction_like _icon_spacing">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-thumbs-up">
                 <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3" />
               </svg>
@@ -328,11 +297,10 @@ const PostDetails = ({ post, currentUserId, onPostDeleted }) => {
           </span>
         </button>
         <button
-          className="_feed_inner_timeline_reaction_comment _feed_reaction"
-          style={{ background: 'transparent', color: '#666' }}
+          className="_feed_inner_timeline_reaction_comment _feed_reaction _comment_button"
         >
           <span className="_feed_inner_timeline_reaction_link">
-            <span  style={{marginRight: '6px'}}>
+            <span className="_icon_spacing">
             <svg className="_reaction_svg" xmlns="http://www.w3.org/2000/svg" width="21" height="21" fill="none" viewBox="0 0 21 21">
               <path stroke="currentColor" d="M1 10.5c0-.464 0-.696.009-.893A9 9 0 019.607 1.01C9.804 1 10.036 1 10.5 1v0c.464 0 .696 0 .893.009a9 9 0 018.598 8.598c.009.197.009.429.009.893v6.046c0 1.36 0 2.041-.317 2.535a2 2 0 01-.602.602c-.494.317-1.174.317-2.535.317H10.5c-.464 0-.696 0-.893-.009a9 9 0 01-8.598-8.598C1 11.196 1 10.964 1 10.5v0z" />
               <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" d="M6.938 9.313h7.125M10.5 14.063h3.563" />

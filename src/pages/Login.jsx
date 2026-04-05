@@ -82,7 +82,7 @@ const Login = () => {
                 <h4 className="_social_login_content_title _titl4 _mar_b50">Login to your account</h4>
 
                 {error && (
-                  <div style={{ color: 'red', marginBottom: '20px', fontSize: '14px', textAlign: 'center' }}>
+                  <div className="_error_message_text">
                     {error}
                   </div>
                 )}
@@ -135,7 +135,7 @@ const Login = () => {
                     <div className="_social_login_bottom_txt">
                       <p className="_social_login_bottom_txt_para">
                         Don't have an account?{' '}
-                        <Link to="/register" style={{ color: '#1890FF', textDecoration: 'none' }}>
+                        <Link to="/register" className="_primary_link">
                           Create New Account
                         </Link>
                       </p>

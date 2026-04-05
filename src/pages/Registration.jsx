@@ -93,7 +93,7 @@ const Registration = () => {
                 <h4 className="_social_registration_content_title _titl4 _mar_b50">Registration</h4>
 
                 {error && (
-                  <div style={{ color: 'red', marginBottom: '20px', fontSize: '14px', textAlign: 'center' }}>
+                  <div className="_error_message_text">
                     {error}
                   </div>
                 )}
@@ -181,10 +181,10 @@ const Registration = () => {
                   </div>
                 </form>
 
-                <div style={{ textAlign: 'center', marginTop: '20px' }}>
-                  <p style={{ fontSize: '14px', marginBottom: '0' }}>
+                <div className="_registration_login_section">
+                  <p className="_registration_login_paragraph">
                     Already have an account?{' '}
-                    <Link to="/login" style={{ color: '#1890FF', textDecoration: 'none' }}>
+                    <Link to="/login" className="_primary_link">
                       Login here
                     </Link>
                   </p>

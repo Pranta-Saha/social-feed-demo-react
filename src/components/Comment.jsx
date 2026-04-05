@@ -58,21 +58,21 @@ const Comment = ({ comment, postId, onCommentLiked, onReplyAdded, currentUserId 
   const timeAgo = getTimeAgo(comment.createdAt);
 
   return (
-    <div style={{ marginBottom: '16px', paddingBottom: '16px', borderBottom: '1px solid #F0F2F5' }}>
+    <div className="_comment_item_wrapper">
       <div>
-        <div style={{ display: 'flex', gap: '8px' }}>
+        <div className="_comment_content_wrapper">
           <img
             src="/assets/images/default-image.png"
             alt={comment.author?.firstName || 'User'}
-            style={{ width: '32px', height: '32px', borderRadius: '50%', objectFit: 'cover' }}
+            className="_comment_avatar"
           />
-          <div style={{ flex: 1 }}>
+          <div className="_comment_flex_container">
             <div className="_comment_area">
-              <div className="_comment_details" style={{minWidth: '380px'}}>
+              <div className="_comment_details _comment_details_wrapper">
                 <div className="_comment_details_top">
                   <div className="_comment_name">
                     <a href="#0">
-                      <h4 className="_comment_name_title" style={{ marginBottom: '4px' }}>
+                      <h4 className="_comment_name_title _comment_title_spacing">
                         {comment.author?.firstName} {comment.author?.lastName}
                       </h4>
                     </a>
@@ -83,22 +83,12 @@ const Comment = ({ comment, postId, onCommentLiked, onReplyAdded, currentUserId 
                     <span>{comment.content}</span>
                   </p>
                 </div>
-                <div className="_total_reactions" style={{ display: 'flex', gap: '8px', alignItems: 'center', marginTop: '8px' }}>
-                  <div style={{ position: 'relative', display: 'inline-block' }}>
+                <div className="_comment_reactions _total_reactions">
+                  <div className="_comment_likes_container">
                     <button
                       onMouseEnter={() => setShowLikedUsers(true)}
                       onMouseLeave={() => setShowLikedUsers(false)}
-                      style={{
-                        background: 'none',
-                        border: 'none',
-                        cursor: 'pointer',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '4px',
-                        color: '#1890FF',
-                        fontWeight: '600',
-                        fontSize: '14px',
-                      }}
+                      className="_comment_likes_button"
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                         <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3" />
@@ -106,22 +96,9 @@ const Comment = ({ comment, postId, onCommentLiked, onReplyAdded, currentUserId 
                       {likes.length}
                     </button>
                     {showLikedUsers && likes.length > 0 && (
-                      <div
-                        style={{
-                          position: 'absolute',
-                          top: '24px',
-                          left: '0',
-                          background: 'white',
-                          border: '1px solid #DDD',
-                          borderRadius: '4px',
-                          padding: '8px',
-                          minWidth: '150px',
-                          zIndex: 10,
-                          boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-                        }}
-                      >
+                      <div className="_comment_likes_dropdown">
                         {likes.map((like, idx) => (
-                          <div key={idx} style={{ fontSize: '12px', padding: '4px 0' }}>
+                          <div key={idx} className="_comment_like_item">
                             {like.user?.firstName} {like.user?.lastName}
                           </div>
                         ))}
@@ -131,19 +108,12 @@ const Comment = ({ comment, postId, onCommentLiked, onReplyAdded, currentUserId 
                 </div>
                 <div className="_comment_reply">
                   <div className="_comment_reply_num">
-                    <ul className="_comment_reply_list" style={{ display: 'flex', gap: '12px' }}>
+                    <ul className="_comment_reply_list _comment_action_list">
                       <li>
                         <button
                           onClick={handleLikeComment}
                           disabled={liking}
-                          style={{
-                            background: 'none',
-                            border: 'none',
-                            cursor: 'pointer',
-                            color: isLiked ? '#1890FF' : '#666',
-                            fontWeight: isLiked ? '600' : '400',
-                            fontSize: '13px',
-                          }}
+                          className={`_comment_like_btn ${isLiked ? 'liked' : ''}`}
                         >
                           Like.
                         </button>
@@ -151,19 +121,13 @@ const Comment = ({ comment, postId, onCommentLiked, onReplyAdded, currentUserId 
                       <li>
                         <button
                           onClick={() => setShowReplyInput(!showReplyInput)}
-                          style={{
-                            background: 'none',
-                            border: 'none',
-                            cursor: 'pointer',
-                            color: '#666',
-                            fontSize: '13px',
-                          }}
+                          className="_comment_reply_btn"
                         >
                           Reply.
                         </button>
                       </li>
                       <li>
-                        <span className="_time_link" style={{ fontSize: '13px', color: '#999' }}>
+                        <span className="_time_link _comment_time">
                           {timeAgo}
                         </span>
                       </li>
@@ -171,14 +135,7 @@ const Comment = ({ comment, postId, onCommentLiked, onReplyAdded, currentUserId 
                         <li>
                           <button
                             onClick={() => setShowReplies(!showReplies)}
-                            style={{
-                              background: 'none',
-                              border: 'none',
-                              cursor: 'pointer',
-                              color: '#1890FF',
-                              fontSize: '13px',
-                              fontWeight: '500',
-                            }}
+                            className="_comment_replies_button"
                           >
                             {showReplies ? 'Hide' : 'Show'} ({replies.length}) Replies
                           </button>
@@ -191,37 +148,28 @@ const Comment = ({ comment, postId, onCommentLiked, onReplyAdded, currentUserId 
             </div>
 
             {showReplyInput && (
-              <form onSubmit={handleReplySubmit} style={{ marginTop: '12px' }}>
+              <form onSubmit={handleReplySubmit} className="_reply_form_wrapper">
                 <div className="_feed_inner_comment_box">
-                  <div className="_feed_inner_comment_box_content" style={{ display: 'flex', gap: '8px' }}>
+                  <div className="_feed_inner_comment_box_content _comment_input_wrapper">
                     <div className="_feed_inner_comment_box_content_image">
                       <img
                         src="/assets/images/default-image.png"
                         alt="You"
-                        style={{ width: '32px', height: '32px', borderRadius: '50%', objectFit: 'cover' }}
+                        className="_comment_avatar"
                       />
                     </div>
-                    <div className="_feed_inner_comment_box_content_txt" style={{ flex: 1 }}>
+                    <div className="_feed_inner_comment_box_content_txt _comment_input_content">
                       <textarea
-                        className="form-control _comment_textarea"
+                        className="form-control _comment_textarea _reply_textarea"
                         placeholder="Write a reply"
                         value={replyContent}
                         onChange={(e) => setReplyContent(e.target.value)}
-                        style={{ minHeight: '40px', padding: '8px' }}
                       />
                     </div>
                     <button
                       type="submit"
                       disabled={replying}
-                      style={{
-                        background: '#1890FF',
-                        color: 'white',
-                        border: 'none',
-                        padding: '8px 12px',
-                        borderRadius: '4px',
-                        cursor: 'pointer',
-                        fontSize: '12px',
-                      }}
+                      className="_reply_submit_button"
                     >
                       {replying ? 'Replying...' : 'Reply'}
                     </button>
@@ -231,7 +179,7 @@ const Comment = ({ comment, postId, onCommentLiked, onReplyAdded, currentUserId 
             )}
 
             {showReplies && replies.length > 0 && (
-              <div style={{ marginTop: '12px' }}>
+              <div className="_replies_wrapper">
                 {replies.map((reply) => (
                   <Reply
                     key={reply.id}

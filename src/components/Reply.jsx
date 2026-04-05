@@ -33,70 +33,44 @@ const Reply = ({ reply, postId, commentId, onReplyLiked, currentUserId }) => {
   const timeAgo = getTimeAgo(reply.createdAt);
 
   return (
-    <div style={{ marginLeft: '32px', marginBottom: '12px', paddingLeft: '12px', borderLeft: '2px solid #E8E8E8' }}>
-      <div style={{ display: 'flex', gap: '8px' }}>
+    <div className="_reply_container">
+      <div className="_reply_content_wrapper">
         <div>
           <img
             src="/assets/images/default-image.png"
             alt={reply.author?.firstName || 'User'}
-            style={{ width: '32px', height: '32px', borderRadius: '50%', objectFit: 'cover' }}
+            className="_reply_avatar"
           />
         </div>
-        <div style={{ flex: 1 }}>
+        <div className="_reply_flex_1">
           <div>
             <div>
-              <h4 className="_comment_name_title" style={{ marginBottom: '4px' }}>
+              <h4 className="_comment_name_title _reply_author_name">
                   {reply.author?.firstName} {reply.author?.lastName}
                 </h4>
             </div>
-            <div style={{ fontSize: '14px', color: '#333' }}>{reply.content}</div>
-            <div style={{ display: 'flex', gap: '12px', fontSize: '12px', marginTop: '8px', alignItems: 'center' }}>
+            <div className="_reply_content_text">{reply.content}</div>
+            <div className="_reply_actions">
               <button
                 onClick={handleLike}
                 disabled={liking}
-                style={{
-                  background: 'none',
-                  border: 'none',
-                  cursor: 'pointer',
-                  color: isLiked ? '#1890FF' : '#999',
-                  fontWeight: isLiked ? '600' : '400',
-                }}
+                className={`_reply_like_button ${isLiked ? 'liked' : ''}`}
               >
                 Like
               </button>
-              <span style={{ color: '#999' }}>{timeAgo}</span>
-              <div style={{ position: 'relative', display: 'inline-block' }}>
+              <span className="_reply_time_text">{timeAgo}</span>
+              <div className="_reply_likes_dropdown_container">
                 <button
                   onMouseEnter={() => setShowLikedUsers(true)}
                   onMouseLeave={() => setShowLikedUsers(false)}
-                  style={{
-                    background: 'none',
-                    border: 'none',
-                    cursor: 'pointer',
-                    color: '#1890FF',
-                    fontWeight: '600',
-                    padding: '0',
-                  }}
+                  className="_reply_likes_button"
                 >
                   {likes.length} Likes
                 </button>
                 {showLikedUsers && likes.length > 0 && (
-                  <div
-                    style={{
-                      position: 'absolute',
-                      top: '24px',
-                      left: '0',
-                      background: 'white',
-                      border: '1px solid #DDD',
-                      borderRadius: '4px',
-                      padding: '8px',
-                      minWidth: '150px',
-                      zIndex: 10,
-                      boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-                    }}
-                  >
+                  <div className="_reply_likes_dropdown">
                     {likes.map((like, idx) => (
-                      <div key={idx} style={{ fontSize: '12px', padding: '4px 0' }}>
+                      <div key={idx} className="_reply_like_item">
                         {like.user?.firstName} {like.user?.lastName}
                       </div>
                     ))}

@@ -50,36 +50,26 @@ const CommentSection = ({ postId, comments: initialComments, currentUserId, onCo
     <div className="_feed_inner_timeline_cooment_area">
       <div className="_feed_inner_comment_box">
         <form className="_feed_inner_comment_box_form" onSubmit={handleAddComment}>
-          <div className="_feed_inner_comment_box_content" style={{ display: 'flex', gap: '8px' }}>
+          <div className="_feed_inner_comment_box_content _comment_input_wrapper">
             <div className="_feed_inner_comment_box_content_image">
               <img
                 src="/assets/images/default-image.png"
                 alt="Your profile"
-                style={{ width: '40px', height: '40px', borderRadius: '50%', objectFit: 'cover' }}
+                className="_comment_input_avatar"
               />
             </div>
-            <div className="_feed_inner_comment_box_content_txt" style={{ flex: 1 }}>
+            <div className="_feed_inner_comment_box_content_txt _comment_input_content">
               <textarea
-                className="form-control _comment_textarea"
+                className="form-control _comment_textarea _comment_input_textarea"
                 placeholder="Write a comment"
                 value={commentContent}
                 onChange={(e) => setCommentContent(e.target.value)}
-                style={{ minHeight: '40px' }}
               />
             </div>
             <button
               type="submit"
               disabled={loading}
-              style={{
-                background: '#1890FF',
-                color: 'white',
-                border: 'none',
-                padding: '8px 12px',
-                borderRadius: '4px',
-                cursor: 'pointer',
-                fontSize: '12px',
-                whiteSpace: 'nowrap',
-              }}
+              className="_comment_submit_button"
             >
               {loading ? 'Posting...' : 'Post'}
             </button>
@@ -92,18 +82,8 @@ const CommentSection = ({ postId, comments: initialComments, currentUserId, onCo
           <div className="_previous_comment">
             <button
               type="button"
-              className="_previous_comment_txt"
+              className="_previous_comment_txt _previous_comments_button"
               onClick={() => setShowPreviousComments(true)}
-              style={{
-                background: 'none',
-                border: 'none',
-                color: '#1890FF',
-                cursor: 'pointer',
-                textDecoration: 'underline',
-                fontSize: '12px',
-                fontWeight: '500',
-                marginBottom: '12px',
-              }}
             >
               View previous comments ({comments.length - 1} more)
             </button>
@@ -111,7 +91,7 @@ const CommentSection = ({ postId, comments: initialComments, currentUserId, onCo
         )}
 
         {displayComments.length > 0 && (
-          <div style={{ padding: '12px 0' }}>
+          <div className="_comments_wrapper">
             {displayComments.map((comment) => (
               <Comment
                 key={comment.id}
@@ -126,7 +106,7 @@ const CommentSection = ({ postId, comments: initialComments, currentUserId, onCo
         )}
 
         {comments.length === 0 && (
-          <div style={{ textAlign: 'center', padding: '20px', color: '#999', fontSize: '14px' }}>
+          <div className="_no_comments_message">
             No comments yet.
           </div>
         )}

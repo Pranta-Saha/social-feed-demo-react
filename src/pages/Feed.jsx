@@ -54,8 +54,8 @@ const Feed = () => {
 
   if (authLoading || loading) {
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-        <div style={{ fontSize: '18px', color: '#666' }}>Loading...</div>
+      <div className="_loading_container">
+        <div className="_loading_text">Loading...</div>
       </div>
     );
   }
@@ -76,16 +76,7 @@ const Feed = () => {
                 <div className="_layout_middle_wrap">
                   <div className="_layout_middle_inner">
                     {error && (
-                      <div
-                        style={{
-                          background: '#ffe8e8',
-                          color: '#c41c1c',
-                          padding: '12px 16px',
-                          borderRadius: '6px',
-                          marginBottom: '16px',
-                          fontSize: '14px',
-                        }}
-                      >
+                      <div className="_error_alert_box">
                         {error}
                       </div>
                     )}
@@ -107,15 +98,7 @@ const Feed = () => {
                         ))}
                       </div>
                     ) : (
-                      <div
-                        style={{
-                          textAlign: 'center',
-                          padding: '40px',
-                          color: '#999',
-                          fontSize: '18px',
-                          marginTop: '20px',
-                        }}
-                      >
+                      <div className="_no_posts_message\">
                         <p>No posts yet. Be the first to create one!</p>
                       </div>
                     )}
