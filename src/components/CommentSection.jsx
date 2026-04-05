@@ -1,11 +1,16 @@
-import { useState } from 'react';
-import Comment from './Comment';
-import apiService from '../services/apiService';
+import { useState } from "react";
+import Comment from "./Comment";
+import apiService from "../services/apiService";
 
-const CommentSection = ({ postId, comments: initialComments, currentUserId, onCommentAdded }) => {
+const CommentSection = ({
+  postId,
+  comments: initialComments,
+  currentUserId,
+  onCommentAdded,
+}) => {
   const [comments, setComments] = useState(initialComments);
   const [showPreviousComments, setShowPreviousComments] = useState(false);
-  const [commentContent, setCommentContent] = useState('');
+  const [commentContent, setCommentContent] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleAddComment = async (e) => {
@@ -16,20 +21,17 @@ const CommentSection = ({ postId, comments: initialComments, currentUserId, onCo
     try {
       const newComment = await apiService.createComment(postId, commentContent);
       setComments([newComment, ...comments]);
-      setCommentContent('');
+      setCommentContent("");
       if (onCommentAdded) onCommentAdded(newComment);
     } catch (error) {
-      console.error('Failed to add comment:', error);
-      alert('Failed to add comment');
+      console.error("Failed to add comment:", error);
+      alert("Failed to add comment");
     } finally {
       setLoading(false);
     }
   };
 
-  const handleCommentLiked = (commentId) => {
-    // This is handled by the Comment component with apiService
-    // Just refresh the comment if needed
-  };
+  const handleCommentLiked = (commentId) => { };
 
   const handleReplyAdded = (commentId, reply) => {
     setComments(
@@ -39,17 +41,22 @@ const CommentSection = ({ postId, comments: initialComments, currentUserId, onCo
               ...c,
               replies: [...(c.replies || []), reply],
             }
-          : c
-      )
+          : c,
+      ),
     );
   };
 
-  const displayComments = showPreviousComments ? comments : comments.slice(0, 1);
+  const displayComments = showPreviousComments
+    ? comments
+    : comments.slice(0, 1);
 
   return (
     <div className="_feed_inner_timeline_cooment_area">
       <div className="_feed_inner_comment_box">
-        <form className="_feed_inner_comment_box_form" onSubmit={handleAddComment}>
+        <form
+          className="_feed_inner_comment_box_form"
+          onSubmit={handleAddComment}
+        >
           <div className="_feed_inner_comment_box_content _comment_input_wrapper">
             <div className="_feed_inner_comment_box_content_image">
               <img
@@ -71,7 +78,7 @@ const CommentSection = ({ postId, comments: initialComments, currentUserId, onCo
               disabled={loading}
               className="_comment_submit_button"
             >
-              {loading ? 'Posting...' : 'Post'}
+              {loading ? "Posting..." : "Post"}
             </button>
           </div>
         </form>
@@ -79,7 +86,7 @@ const CommentSection = ({ postId, comments: initialComments, currentUserId, onCo
 
       <div className="_timline_comment_main">
         {comments.length > 1 && !showPreviousComments && (
-          <div className="_previous_comment">
+          <div>
             <button
               type="button"
               className="_previous_comment_txt _previous_comments_button"
@@ -106,9 +113,7 @@ const CommentSection = ({ postId, comments: initialComments, currentUserId, onCo
         )}
 
         {comments.length === 0 && (
-          <div className="_no_comments_message">
-            No comments yet.
-          </div>
+          <div className="_no_comments_message">No comments yet.</div>
         )}
       </div>
     </div>

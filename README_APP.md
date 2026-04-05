@@ -76,23 +76,6 @@ src/
 └── main.jsx             # React entry point
 ```
 
-## 🔐 Authentication
-
-### Demo Credentials
-For testing without creating a new account:
-- **Email**: `user1@example.com`
-- **Password**: `password123`
-
-Additional test accounts available:
-- `user2@example.com` / `password123`
-- `user3@example.com` / `password123`
-
-### How It Works
-1. User registers with first name, last name, email, and password
-2. JWT token is stored in localStorage
-3. Token is used for authenticated requests
-4. Protected route redirects unauthenticated users to login
-
 ## 🎨 Design & Styling
 
 All styling comes from the approved design specifications:
@@ -105,20 +88,6 @@ All styling comes from the approved design specifications:
 
 **Important**: Do not create new CSS classes. All styling uses the predefined classes from the design system.
 
-## 💾 Data Management
-
-### Mock Data Service
-The app uses a mock data service for development and testing. This simulates a backend API without requiring a real server.
-
-**Mock Data Includes**:
-- 3 pre-configured test users
-- 3 sample posts
-- Comments and replies for demonstration
-
-### In Production
-Replace mock API calls in the following files with real backend endpoints:
-- `src/services/mockService.js` → Implement real API calls
-- `src/context/AuthContext.jsx` → Update API endpoint configuration
 
 ## 🔄 Features Implementation
 
@@ -248,82 +217,3 @@ Bootstrap grid classes are used throughout, with custom responsive CSS.
 - **Components**: Functional components with React Hooks
 - **State Management**: React Context for auth, local state for components
 - **Styling**: CSS classes from design files, no inline styles except for dynamic values
-
-## 🔗 Integrating with Real Backend
-
-When ready to integrate with a real backend:
-
-1. **Create API endpoint configuration**:
-   ```javascript
-   // src/services/config.js
-   export const API_BASE_URL = 'http://localhost:5000/api';
-   ```
-
-2. **Replace mock service with real API calls**:
-   ```javascript
-   // src/services/apiService.js
-   export const register = (firstName, lastName, email, password) => {
-     return fetch(`${API_BASE_URL}/auth/register`, { ... });
-   };
-   ```
-
-3. **Update AuthContext to use real endpoints**
-
-4. **Implement proper error handling**
-
-## 📦 Build for Production
-
-```bash
-npm run build
-```
-
-This creates an optimized production build in the `dist/` folder.
-
-## ⚙️ Environment Configuration
-
-Create a `.env` file for environment-specific configuration:
-```
-VITE_API_BASE_URL=http://localhost:5000/api
-VITE_JWT_TOKEN_KEY=auth_token
-```
-
-## 🐛 Troubleshooting
-
-### App won't start
-- Clear node_modules: `rm -rf node_modules && npm install`
-- Rebuild: `npm run build`
-- Check port 5173 isn't in use
-
-### Styles not loading
-- Verify assets are in `src/assets/`
-- Check CSS import order in `src/index.css`
-- Restart dev server
-
-### Components not rendering
-- Check console for error messages
-- Verify component imports are correct
-- Ensure all required props are passed
-
-## 📄 Browser Support
-
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
-
-## 🤝 Contributing
-
-When adding features:
-1. Use existing CSS classes from the design system
-2. Keep components focused and reusable
-3. Handle errors gracefully
-4. Test with the mock data service first
-5. Use React Context for cross-component state
-
-## 📄 License
-
-This project is built for educational purposes based on provided design specifications.
-
----
-
-**Note**: The `design-reference` folder is for reference only and will be removed before production deployment.

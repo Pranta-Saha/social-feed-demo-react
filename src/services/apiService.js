@@ -1,16 +1,11 @@
-// API Service - Real backend integration
-// Replace mock service with actual API calls
+const API_BASE_URL = "http://localhost:3000/api";
 
-const API_BASE_URL = 'http://localhost:3000/api';
+const getAuthToken = () => localStorage.getItem("token");
 
-// Helper function to get auth token
-const getAuthToken = () => localStorage.getItem('token');
-
-// Helper function to make API calls with auth header
 const apiCall = async (endpoint, options = {}) => {
   const token = getAuthToken();
   const headers = {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
     ...options.headers,
   };
 
@@ -32,10 +27,9 @@ const apiCall = async (endpoint, options = {}) => {
 };
 
 export const apiService = {
-  // ==================== AUTH ====================
   register: async (firstName, lastName, email, password) => {
-    const data = await apiCall('/auth/register', {
-      method: 'POST',
+    const data = await apiCall("/auth/register", {
+      method: "POST",
       body: JSON.stringify({ firstName, lastName, email, password }),
     });
     return {
@@ -45,8 +39,8 @@ export const apiService = {
   },
 
   login: async (email, password) => {
-    const data = await apiCall('/auth/login', {
-      method: 'POST',
+    const data = await apiCall("/auth/login", {
+      method: "POST",
       body: JSON.stringify({ email, password }),
     });
     return {
@@ -55,7 +49,6 @@ export const apiService = {
     };
   },
 
-  // ==================== POSTS ====================
   getPosts: async (page = 1, limit = 10) => {
     const data = await apiCall(`/posts?page=${page}&limit=${limit}`);
     return data.posts || data;
@@ -67,10 +60,10 @@ export const apiService = {
 
   createPost: async (content, image, isPrivate = false) => {
     const formData = new FormData();
-    formData.append('content', content);
-    formData.append('isPrivate', isPrivate);
+    formData.append("content", content);
+    formData.append("isPrivate", isPrivate);
     if (image) {
-      formData.append('image', image);
+      formData.append("image", image);
     }
 
     const token = getAuthToken();
@@ -80,88 +73,83 @@ export const apiService = {
     }
 
     const response = await fetch(`${API_BASE_URL}/posts`, {
-      method: 'POST',
+      method: "POST",
       headers,
       body: formData,
     });
 
     if (!response.ok) {
       const errorData = await response.json();
-      throw new Error(errorData.message || 'Failed to create post');
+      throw new Error(errorData.message || "Failed to create post");
     }
 
     return response.json();
   },
 
   deletePost: async (postId) => {
-    return apiCall(`/posts/${postId}`, { method: 'DELETE' });
+    return apiCall(`/posts/${postId}`, { method: "DELETE" });
   },
 
-  // ==================== POST LIKES ====================
   likePost: async (postId) => {
-    return apiCall(`/posts/${postId}/like`, { method: 'POST' });
+    return apiCall(`/posts/${postId}/like`, { method: "POST" });
   },
 
   unlikePost: async (postId) => {
-    return apiCall(`/posts/${postId}/unlike`, { method: 'POST' });
+    return apiCall(`/posts/${postId}/unlike`, { method: "POST" });
   },
 
   getPostLikes: async (postId) => {
     return apiCall(`/posts/${postId}/likes`);
   },
 
-  // ==================== COMMENTS ====================
   getComments: async (postId) => {
     return apiCall(`/posts/${postId}/comments`);
   },
 
   createComment: async (postId, content) => {
     return apiCall(`/posts/${postId}/comments`, {
-      method: 'POST',
+      method: "POST",
       body: JSON.stringify({ content }),
     });
   },
 
   deleteComment: async (commentId) => {
-    return apiCall(`/posts/comments/${commentId}`, { method: 'DELETE' });
+    return apiCall(`/posts/comments/${commentId}`, { method: "DELETE" });
   },
 
-  // ==================== COMMENT LIKES ====================
   likeComment: async (commentId) => {
-    return apiCall(`/posts/comments/${commentId}/like`, { method: 'POST' });
+    return apiCall(`/posts/comments/${commentId}/like`, { method: "POST" });
   },
 
   unlikeComment: async (commentId) => {
-    return apiCall(`/posts/comments/${commentId}/unlike`, { method: 'POST' });
+    return apiCall(`/posts/comments/${commentId}/unlike`, { method: "POST" });
   },
 
   getCommentLikes: async (commentId) => {
     return apiCall(`/posts/comments/${commentId}/likes`);
   },
 
-  // ==================== REPLIES ====================
   getReplies: async (commentId) => {
     return apiCall(`/posts/comments/${commentId}/replies`);
   },
 
   createReply: async (commentId, content) => {
     return apiCall(`/posts/comments/${commentId}/replies`, {
-      method: 'POST',
+      method: "POST",
       body: JSON.stringify({ content }),
     });
   },
 
   deleteReply: async (replyId) => {
-    return apiCall(`/posts/replies/${replyId}`, { method: 'DELETE' });
+    return apiCall(`/posts/replies/${replyId}`, { method: "DELETE" });
   },
 
-  // ==================== REPLY LIKES ====================
   likeReply: async (replyId) => {
-    return apiCall(`/posts/replies/${replyId}/like`, { method: 'POST' });
+    return apiCall(`/posts/replies/${replyId}/like`, { method: "POST" });
   },
 
   unlikeReply: async (replyId) => {
-    return apiCall(`/posts/replies/${replyId}/unlike`, { method: 'POST' });
+    return apiCall(`/posts/replies/${replyId}/unlike`, { method: "POST" });
   },
 
   getReplyLikes: async (replyId) => {

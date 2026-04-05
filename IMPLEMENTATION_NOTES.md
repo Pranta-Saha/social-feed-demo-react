@@ -10,11 +10,11 @@ This React application is built using modern best practices with the following a
 ├─────────────────────────────────────────────────┤
 │  Registration  │  Login  │  Feed (Protected)    │
 ├─────────────────────────────────────────────────┤
-│         AuthContext (State Management)           │
+│         AuthContext (State Management)          │
 ├─────────────────────────────────────────────────┤
 │  Components (UI Layer)                          │
 ├─────────────────────────────────────────────────┤
-│  Mock Service / API Service (Data Layer)        │
+│   API Service (Data Layer)                      │
 └─────────────────────────────────────────────────┘
 ```
 
@@ -30,26 +30,6 @@ This React application is built using modern best practices with the following a
 - Stores user info, token, and loading state
 - Provides login, register, logout methods
 - Integrates with localStorage for persistence
-
-### 2. Data Layer: Mock Service
-**Why**: Allows full feature development without backend dependency
-
-**File**: `src/services/mockService.js`
-- Mock data storage with users, posts, comments, replies
-- Simulates async operations with 200-500ms delays
-- Can be swapped with real API seamlessly
-
-**To migrate to real API**:
-```javascript
-// Replace mock calls with real ones
-export const mockApiService = {
-  getPosts: async (userId) => {
-    const response = await fetch(`/api/posts?userId=${userId}`);
-    return response.json();
-  },
-  // ... etc
-};
-```
 
 ### 3. Component Structure: Functional Components with Hooks
 **Why**: Modern React approach, easier to reason about
@@ -138,37 +118,6 @@ Posts Array Structure:
 └─────────────────────────────────────┘
 ```
 
-### 7. Like System Implementation
-
-**Pattern**: Parallel arrays for optimization
-```javascript
-// Instead of storing full user objects
-likes: ['user1', 'user2'],
-likedBy: [
-  { id: 'user1', name: 'Alice' },
-  { id: 'user2', name: 'Bob' }
-]
-
-// Benefits:
-// - Fast lookup: likes.includes(userId)
-// - Full info for display: hover shows likedBy
-// - Flexible for different data needs
-```
-
-**Like Logic**:
-```javascript
-const isLiked = likes.includes(currentUserId);
-if (isLiked) {
-  // Remove like
-  likes.filter(id => id !== currentUserId);
-  likedBy.filter(u => u.id !== currentUserId);
-} else {
-  // Add like
-  likes.push(currentUserId);
-  likedBy.push({ id: currentUserId, name: ... });
-}
-```
-
 ### 8. Comment & Reply System
 
 **Nesting Structure**:
@@ -186,7 +135,7 @@ Post
 ```
 
 **View Control**:
-- First 3 comments shown by default
+- First 1 comment shown by default
 - "View previous comments" expands all
 - Replies hidden by default
 - "Show/Hide Replies" toggles visibility
@@ -294,12 +243,6 @@ Feed renders new post immediately
 
 ### 14. Performance Considerations
 
-**Implemented**:
-- Lazy loading of comments (3 at a time)
-- Lazy loading of replies (show/hide button)
-- No unnecessary re-renders (proper dependency arrays)
-- Image lazy loading via native `img` tag
-
 **Future Optimizations**:
 - Virtual scrolling for large post lists
 - Memoized components with React.memo()
@@ -372,41 +315,10 @@ Feed renders new post immediately
 10. ✅ View previous comments → All comments show
 
 ### UI/UX
-1. ✅ Responsive on mobile
-2. ✅ Responsive on tablet
-3. ✅ Responsive on desktop
 4. ✅ Loading states show
 5. ✅ Error messages display
 6. ✅ Images load with fallback
 7. ✅ Timestamps update (showing time delta)
-
----
-
-## Known Limitations
-
-1. **Mock Data**: Resets on page reload
-   - Solution: Implement real backend
-
-2. **Single Image per Post**: 
-   - By spec, but could support multiple
-
-3. **No Image Compression**:
-   - Implement on client or server
-
-4. **No Post Editing**:
-   - Could add edit/delete modal
-
-5. **No User Profiles**:
-   - Could add sidebar with user info
-
-6. **No Notifications**:
-   - Could add notification badge
-
-7. **No Search**:
-   - Could add search bar in header
-
-8. **No Pagination**:
-   - Infinite scroll would be nice
 
 ---
 
@@ -429,7 +341,6 @@ Feed renders new post immediately
 
 **Standards Followed**:
 - ESLint rules enforced
-- No console errors
 - Consistent formatting
 - Clear component names
 - Comments where needed
@@ -441,4 +352,3 @@ Feed renders new post immediately
 - Clear data flow
 - Documented patterns
 - Test-friendly architecture
-

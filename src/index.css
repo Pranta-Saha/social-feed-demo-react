@@ -1,9 +1,9 @@
 /* Import design reference CSS */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700;800&display=swap');
-@import './assets/css/bootstrap.min.css';
-@import './assets/css/common.css';
-@import './assets/css/main.css';
-@import './assets/css/responsive.css';
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700;800&display=swap");
+@import "./assets/css/bootstrap.min.css";
+@import "./assets/css/common.css";
+@import "./assets/css/main.css";
+@import "./assets/css/responsive.css";
 
 * {
   margin: 0;
@@ -12,6 +12,6 @@
 }
 
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   background-color: var(--bcolor1);
 }

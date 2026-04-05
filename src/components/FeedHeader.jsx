@@ -1,5 +1,5 @@
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 const FeedHeader = () => {
   const { user, logout } = useAuth();
@@ -7,7 +7,7 @@ const FeedHeader = () => {
 
   const handleLogout = () => {
     logout();
-    navigate('/login');
+    navigate("/login");
   };
 
   return (
@@ -15,17 +15,16 @@ const FeedHeader = () => {
       <div className="container _custom_container _feed_header_container">
         <div className="_logo_wrap">
           <a className="navbar-brand" href="/feed">
-            <img src="/assets/images/logo.svg" alt="Logo" className="_nav_logo" />
+            <img
+              src="/assets/images/logo.svg"
+              alt="Logo"
+              className="_nav_logo"
+            />
           </a>
         </div>
         <div className="_feed_header_right">
-          <span className="_welcome_text">
-            Welcome, {user?.firstName}!
-          </span>
-          <button
-            onClick={handleLogout}
-            className="_logout_button"
-          >
+          <span className="_welcome_text">Welcome, {user?.firstName}!</span>
+          <button onClick={handleLogout} className="_logout_button">
             Logout
           </button>
         </div>

@@ -1,21 +1,21 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import FeedHeader from '../components/FeedHeader';
-import CreatePost from '../components/CreatePost';
-import PostDetails from '../components/PostDetails';
-import apiService from '../services/apiService';
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import FeedHeader from "../components/FeedHeader";
+import CreatePost from "../components/CreatePost";
+import PostDetails from "../components/PostDetails";
+import apiService from "../services/apiService";
 
 const Feed = () => {
   const { user, isAuthenticated, loading: authLoading } = useAuth();
   const navigate = useNavigate();
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   useEffect(() => {
     if (!authLoading && !isAuthenticated) {
-      navigate('/login');
+      navigate("/login");
       return;
     }
   }, [authLoading, isAuthenticated, navigate]);
@@ -28,13 +28,13 @@ const Feed = () => {
 
   const loadPosts = async () => {
     setLoading(true);
-    setError('');
+    setError("");
     try {
       const feedPosts = await apiService.getPosts();
       setPosts(Array.isArray(feedPosts) ? feedPosts : []);
     } catch (err) {
-      console.error('Failed to load posts:', err);
-      setError('Failed to load posts. Please try again.');
+      console.error("Failed to load posts:", err);
+      setError("Failed to load posts. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -75,11 +75,7 @@ const Feed = () => {
               <div className="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                 <div className="_layout_middle_wrap">
                   <div className="_layout_middle_inner">
-                    {error && (
-                      <div className="_error_alert_box">
-                        {error}
-                      </div>
-                    )}
+                    {error && <div className="_error_alert_box">{error}</div>}
 
                     {/* Create Post Section */}
                     <CreatePost onPostCreated={handlePostCreated} />

@@ -16,11 +16,6 @@ Navigate to the running application and:
 - Fill in: First Name, Last Name, Email, Password
 - Submit to create account (auto-logs in)
 
-#### Option B: Use Demo Account
-- Email: `user1@example.com`
-- Password: `password123`
-- **Or** click "Fill Demo Credentials" button for quick access
-
 ### 3. Features to Test
 
 **Create Posts**
@@ -89,7 +84,6 @@ Key files to understand the architecture:
 ✅ Relative timestamps (e.g., "5 minutes ago")  
 ✅ Post visibility (public/private support)  
 ✅ Default image fallback  
-✅ Responsive design (mobile, tablet, desktop)  
 ✅ Persistent authentication  
 
 ---
@@ -112,12 +106,6 @@ The mock data includes 3 test users. Each user can:
 - Create new posts
 - Comment on posts
 - Like posts and comments
-
-Test users:
-- `user1@example.com` - Alice Johnson
-- `user2@example.com` - Bob Smith  
-- `user3@example.com` - Karim Saif
-
 ---
 
 ## 🐛 Troubleshooting
@@ -142,18 +130,6 @@ Test users:
 
 ---
 
-## 🔗 Integration with Real Backend
-
-To use a real backend instead of mock data:
-
-1. Update `src/services/mockService.js` with real API endpoints
-2. Or create `src/services/apiService.js` with your API calls
-3. Update `src/context/AuthContext.jsx` to use real endpoints
-4. Test all authentication flows
-5. Update post/comment/reply endpoints
-
----
-
 ## 📝 Code Style
 
 - **Components**: Functional components with Hooks
@@ -162,19 +138,3 @@ To use a real backend instead of mock data:
 - **Naming**: Underscore-prefixed for design system classes
 
 ---
-
-## ✨ What's Next?
-
-After testing with mock data:
-
-1. Set up your backend API
-2. Replace mock service with real API calls
-3. Test all features with backend
-4. Deploy to production
-5. Monitor and enhance based on user feedback
-
----
-
-**Happy coding!** 🎉
-
-For detailed documentation, see `README_APP.md`
