@@ -41,7 +41,6 @@ const Login = () => {
     }
   };
 
-  // Demo credentials hint
   const fillDemoCredentials = () => {
     setFormData({
       email: "user1@example.com",

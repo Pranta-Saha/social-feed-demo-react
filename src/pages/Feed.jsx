@@ -68,19 +68,15 @@ const Feed = () => {
         <div className="container _custom_container">
           <div className="_layout_inner_wrap">
             <div className="row">
-              {/* Left Sidebar */}
               <div className="col-xl-3 col-lg-3 col-md-12 col-sm-12" />
 
-              {/* Layout Middle - Main Feed */}
               <div className="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                 <div className="_layout_middle_wrap">
                   <div className="_layout_middle_inner">
                     {error && <div className="_error_alert_box">{error}</div>}
 
-                    {/* Create Post Section */}
                     <CreatePost onPostCreated={handlePostCreated} />
 
-                    {/* Posts Timeline */}
                     {posts.length > 0 ? (
                       <div>
                         {posts.map((post) => (
@@ -102,7 +98,6 @@ const Feed = () => {
                 </div>
               </div>
 
-              {/* Right Sidebar */}
               <div className="col-xl-3 col-lg-3 col-md-12 col-sm-12" />
             </div>
           </div>

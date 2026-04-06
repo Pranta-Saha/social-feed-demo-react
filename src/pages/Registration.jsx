@@ -28,7 +28,6 @@ const Registration = () => {
     setError("");
     setLoading(true);
 
-    // Validate form
     if (
       !formData.firstName ||
       !formData.lastName ||

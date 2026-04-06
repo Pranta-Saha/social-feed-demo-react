@@ -20,7 +20,6 @@ const PostDetails = ({ post, currentUserId, onPostDeleted }) => {
       } else {
         await apiService.likePost(post.id);
         setLiked(true);
-        // Add a temporary like object
         const newLike = {
           userId: currentUserId,
           user: { firstName: "You", lastName: "" },
@@ -58,7 +57,6 @@ const PostDetails = ({ post, currentUserId, onPostDeleted }) => {
   return (
     <div className="_feed_inner_timeline_post_area _b_radious6 _padd_t24 _mar_b16">
       <div className="_feed_inner_timeline_content _padd_r24 _padd_l24">
-        {/* Post Header */}
         <div className="_post_header">
           <div className="_feed_inner_timeline_post_top">
             <div className="_feed_inner_timeline_post_box">
@@ -83,7 +81,6 @@ const PostDetails = ({ post, currentUserId, onPostDeleted }) => {
             </div>
           </div>
 
-          {/* Delete button - show only if current user is author */}
           {currentUserId === post.authorId && (
             <button
               onClick={handleDelete}
@@ -95,10 +92,8 @@ const PostDetails = ({ post, currentUserId, onPostDeleted }) => {
           )}
         </div>
 
-        {/* Post Content */}
         <h4 className="_feed_inner_timeline_post_title">{post.content}</h4>
 
-        {/* Post Image */}
         {post.image && (
           <div className="_feed_inner_timeline_image">
             <img src={post.image} alt="Post" className="_time_img" />
@@ -144,7 +139,6 @@ const PostDetails = ({ post, currentUserId, onPostDeleted }) => {
         </div>
       </div>
 
-      {/* Like and Comment Buttons */}
       <div className="_feed_inner_timeline_reaction">
         <button
           className={`_feed_inner_timeline_reaction_emoji _feed_reaction _post_like_button ${liked ? "liked" : ""}`}
@@ -199,7 +193,6 @@ const PostDetails = ({ post, currentUserId, onPostDeleted }) => {
         </button>
       </div>
 
-      {/* Comment Section */}
       <CommentSection
         postId={post.id}
         comments={post.comments || []}
