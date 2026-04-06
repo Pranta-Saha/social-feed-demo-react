@@ -113,10 +113,6 @@ export const apiService = {
     });
   },
 
-  deleteComment: async (commentId) => {
-    return apiCall(`/posts/comments/${commentId}`, { method: "DELETE" });
-  },
-
   likeComment: async (commentId) => {
     return apiCall(`/posts/comments/${commentId}/like`, { method: "POST" });
   },
@@ -138,10 +134,6 @@ export const apiService = {
       method: "POST",
       body: JSON.stringify({ content }),
     });
-  },
-
-  deleteReply: async (replyId) => {
-    return apiCall(`/posts/replies/${replyId}`, { method: "DELETE" });
   },
 
   likeReply: async (replyId) => {
