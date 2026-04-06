@@ -127,6 +127,7 @@ const CreatePost = ({ onPostCreated }) => {
             onClick={() => {
               setImage(null);
               setImagePreview(null);
+              fileInputRef.current.value = "";
             }}
             className="_image_remove_button"
           >
